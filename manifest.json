@@ -12,7 +12,7 @@
   ],
   "browser_action": {
     "default_icon": "images/default_icon.png",
-    "default_title": "Sess Buddy",
+    "default_title": "Tabboo - Tab Manager",
     "default_popup": "index.html"
 
   }
