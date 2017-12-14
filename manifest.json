@@ -1,0 +1,19 @@
+{
+  "manifest_version": 2,
+  "name": "Tabboo - Tab Manager",
+  "version": "1.0",
+
+  "description": "Simple tab manager for the amazing Firefox Quantum. Inspired by the Chrome extension Session Buddy.",
+
+  "permissions": [
+    "sessions",
+    "tabs",
+    "storage"
+  ],
+  "browser_action": {
+    "default_icon": "images/default_icon.png",
+    "default_title": "Sess Buddy",
+    "default_popup": "index.html"
+
+  }
+}

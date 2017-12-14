@@ -1,0 +1,249 @@
+* {
+    box-sizing: border-box
+}
+body {
+    overflow: hidden;
+    white-space:nowrap;
+    text-transform: capitalize;
+    font-family: Open Sans, sans-serif;
+}
+body,
+html {
+    width: 100%;
+    height: 100%;
+    margin: 0
+}
+.wrapper {
+    display: -ms-grid;
+    display: grid;
+    -webkit-box-align: end;
+    -ms-flex-align: end;
+    align-items: end;
+    -ms-grid-columns: 235px auto;
+    grid-template-columns: 235px auto;
+    -ms-grid-rows: 58px auto;
+    grid-template-rows: 58px auto;
+    grid-gap: 15px 25px;
+    grid-template-areas: "nav nav" "sidebar main"
+}
+.grid__element {
+    padding: 0 12px
+}
+.nav {
+    grid-area: nav;
+    -ms-flex-item-align: center;
+    align-self: center;
+    -ms-grid-column: 1;
+    grid-column-start: 1;
+    grid-column-end: 3;
+    -ms-grid-row: 1;
+    grid-row-start: 1;
+    grid-row-end: 2;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: justify;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    background: linear-gradient(90deg, #ff1ad9 0, #ff9400);
+    height: 100%
+}
+.nav__search {
+    width: 225px;
+    height: 40px;
+    font-size: 14px;
+    padding: 0 0 0 16px
+}
+.icon {
+    height: 16px;
+    width: 16px;
+    display: inline-block;
+    object-fit: contain;
+    vertical-align: middle;
+    -ms-flex-item-align: center;
+    -ms-grid-row-align: center;
+    align-self: center
+}
+.sidebar {
+    grid-area: sidebar;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    height: 420px;
+    margin: 15px 0 10px 0;
+    overflow: scroll;
+}
+
+.sidebar {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex
+}
+.session__legend {
+    margin-top: 15px;
+    padding-left: 2px;
+    font-size: 17px
+}
+
+.session {
+    /*display: flex;
+    flex-direction: column;*/
+    position: relative;
+    padding: 15px 18px;
+    margin: 5px 0;
+    font-size: 16px;
+    color: #fff;
+    background-color: #d3d3d3;
+    box-shadow: inset 0 0 4px -4px rgba(0, 0, 0, .75);
+    cursor: pointer;
+}
+
+.session__delete {
+  position: absolute;
+  top: -5px;
+  right: 0;
+  padding: 7px 10px;
+  cursor: default;
+  text-transform: none;
+}
+
+.session__delete:hover {
+  transition: color 0.1s;
+  color: #ffb732;
+}
+
+.session--selected,
+.session:hover {
+    color: #fff;
+    background-color: grey
+}
+.session__changed {
+    font-size: 15px
+}
+.tab__amount {
+    display: block;
+    width: 50px;
+    font-size: 13px;
+    margin-top: 5px;
+}
+
+#session__namer {
+  display: none;
+  float: right;
+}
+
+
+.main {
+
+    -ms-flex-item-align: start;
+    align-self: flex-start;
+    grid-area: main;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    -webkit-box-pack: justify;
+    -ms-flex-pack: justify;
+    justify-content: space-between
+}
+
+
+.legend__action {
+  display: block;
+  color: #ffffff;
+  font-size: 13px;
+  padding: 4px 8px;
+  border-radius: 3px;
+  cursor: default;
+}
+
+.legend__save {
+  background-color: #ffb732;
+  float: right;
+}
+
+
+.legend__save:hover {
+  background-color: #ffa500;
+}
+
+.legend__open {
+  background-color: #327AFF;
+  float: right;
+}
+
+#session__namer, .legend__open, .legend__save, .legend__amount {
+  margin: 0 5px;
+}
+
+.legend__open:hover {
+  background-color: #2d6de5;
+}
+
+.legend__amount {
+  float: right;
+}
+
+.legend__recorded {
+  float: left;
+  font-size: 16px;
+}
+
+.legend--main {
+    margin: 4px 0 0 5px;
+    font-size: 15px
+}
+
+.session__name {
+  float: left;
+  margin-top: 1px;
+  margin-left: 5px;
+}
+
+.tabs {
+    list-style: none;
+    width: 450px;
+    height: 300px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    padding-left: 6px;
+    margin-top: 10px;
+}
+
+.tab:first-child {
+    margin-top: 0px
+}
+
+.tab {
+  padding: 5px;
+  padding-left: 0;
+}
+.tab__title {
+    font-size: 15px;
+    margin-left: 6px;
+}
+
+.tab__title, .tab__url {
+  display: inline-block;
+  width: 350px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+
+
+
+.tab__url {
+    display: block;
+    font-size: 13px;
+    margin: -10px 0 0 26.5px;
+    text-transform: none;
+}
