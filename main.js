@@ -12,7 +12,7 @@ let currentTabs = [];
     const now = new Date().toUTCString();
 
     return query.map(tab => {
-      return new Tab(tab.title, tab.url, tab.favIconUrl || 'http://via.placeholder.com/30', now);
+      return new Tab(tab.title, tab.url, tab.favIconUrl || 'images/icon__missing.png', now);
     }).filter(tab => !tab.url.search('http'));
   });
 
@@ -38,8 +38,10 @@ let currentTabs = [];
 
 
 function openSession(){
-  const urls = currentTabs.map((obj) => {
-    return obj.url;
+  const tabs = Array(... document.querySelectorAll('.tab'));
+
+  const urls = tabs.map(tab => {
+      return tab.childNodes[5].childNodes[3].textContent.trim();
   });
 
   browser.windows.create({url: urls});
@@ -56,12 +58,14 @@ function displaySidebar(){
       let date = sessions[key][0].created.split(' ');
       date = `${date[1]} ${date[2]}`;
 
+      const color = colorAmount(sessions[key]);
+
       return `<div data-session="${key}" class="saved">
-              <div class="saved__color"></div>
+              <div style="background-color:${color}" class="saved__color"></div>
               <a class="saved__name">${key}</a>
-              <a class="saved__delete">&#10005;</a>
+              <img src="images/icon__delete.svg" class="saved__delete"/>
               <div class="saved__meta">
-                <a class="saved__amount"><span class="amount__number">${sessions[key].length} </span>${sessions[key].length > 1? 'Tabs' : 'Tab'}</a>
+                <a class="saved__amount"><span style="color:${color}" class="amount__number">${sessions[key].length} </span>${sessions[key].length > 1? 'Tabs' : 'Tab'}</a>
                 <a class="saved__date">${date}</a>
               </div>
           </div>`;
@@ -72,6 +76,13 @@ function displaySidebar(){
   });
 }
 
+function colorAmount(array){
+  const color = array.length < 3? '#FDDC43' : array.length < 6? '#FCC257' : array.length < 9? '#FCB760'
+  : array.length < 12? '#FCAC69' : array.length < 15? '#FBA072' : array.length < 18? '#FB967B' :
+  array.length < 21? '#FB8B84' : array.length <= 24? '#FA808C' : array.length > 24? '#FA7198' : '';
+
+  return color;
+}
 
 function sidebarActions(sessionName, e){
 
@@ -80,7 +91,7 @@ function sidebarActions(sessionName, e){
   if (e.target.classList.contains('saved__delete')) {
     deleteSession(target);
 
-  } else if(e.target.parentNode.classList.contains('saved') || e.target.classList.contains('saved')) {
+  } else if(e.target.parentNode.classList.contains('saved') || e.target.classList.contains('saved') || e.target.classList.contains('saved__meta')) {
     displaySession(sessionName[target]);
 
     document.querySelector('#session__namer').style.display = 'none';
@@ -97,14 +108,18 @@ function deleteSession(sessionName){
 }
 
 
+
+
   function displaySession(array){
     const tabs = document.querySelector('.tabs');
 
+
     tabs.innerHTML = array.map((tab, index) => {
       index++;
+      
       return `<li class="tab">
               <a class="tab__number">${index}</a>
-              <img type="image/ico" class="tab__favicon" src="${tab.favicon}" />
+              <img type="image/ico" class="tab__favicon" src="${tab.favicon || ''}" />
               <div class="tab__links">
                 <a class="tab__title">${tab.name}</a>
                 <a class="tab__url" src="${tab.url}">${tab.url}</a>
@@ -112,11 +127,20 @@ function deleteSession(sessionName){
             </li>`;
     }).join('');
 
-    let multipleTabs =`${array.length > 1? 'Tabs' : 'Tab'}`;
-    multipleTabs? document.querySelector('.session__amount').style.width = '91px' : '';
 
-    const count = document.querySelector('.session__amount').innerHTML = `<span class="amount__number session__number">${array.length}</span> ${multipleTabs} `;
-    const date = document.querySelector('.session__date').innerHTML = array[0].created;
+    let multipleTabs =`${array.length > 1? 'Tabs' : 'Tab'}`;
+
+    if (multipleTabs) {
+      document.querySelector('.session__amount').style.width = '91px';
+      document.querySelector('.session__date').style.padding = '7.5px 10px';
+    }
+
+    document.querySelector('.session__amount').style.backgroundColor = colorAmount(array);
+    document.querySelector('.session__save').style.backgroundColor = colorAmount(array);
+    document.querySelector('.session__saveEdit').style.backgroundColor = colorAmount(array);
+
+    document.querySelector('.session__amount').innerHTML = `<span class="amount__number session__number">${array.length}</span> ${multipleTabs} `;
+    document.querySelector('.session__date').innerHTML = array[0].created;
 
     currentTabs = array;
   }
@@ -143,14 +167,14 @@ function deleteSession(sessionName){
       elName.focus();
       return;
     }
-      storage.set({[name.trim()]:array}).then(arr => {
+      storage.set({[name.trim().toUpperCase()]:array}).then(arr => {
         browser.runtime.reload();
     });
   }
 
   function searchSession(array){
 
-      const input = document.querySelector('.nav__search').value;
+      const input = document.querySelector('.nav__search').value.toUpperCase();
       const sidebarWrapper = document.querySelector('.sidebar__wrapper');
 
       browser.storage.local.get(null).then(sessions => {
@@ -159,12 +183,13 @@ function deleteSession(sessionName){
       const result =  sessionsArray.filter(obj => Object.keys(obj).some(key => obj[key].includes(input)));
 
       sidebarWrapper.innerHTML = result.map(saved => {
+        const color = colorAmount(saved[1]);
 
         let date = saved[1][0].created.split(' ');
         date = `${date[1]} ${date[2]}`;
 
         return `<div data-session="${saved[0]}" class="saved">
-                  <div class="saved__color"></div>
+                  <div style="background-color:${color}" class="saved__color"></div>
                   <a class="saved__name">${saved[0]}</a>
                   <a class="saved__delete">x</a>
                 <div class="saved__meta">
@@ -173,7 +198,8 @@ function deleteSession(sessionName){
                 </div>
               </div>`;
       }).join('');
-      });
+
+    });
   }
 
   function editSession(){
@@ -181,22 +207,21 @@ function deleteSession(sessionName){
     const sessionNamer = document.querySelector('#session__namer');
     const tabs = Array(... document.querySelectorAll('.tab'));
 
-    if(sessionName.innerHTML === '') {
+    if(sessionName.style.display === 'none') {
       return;
     }
 
     sessionName.style.display = 'none';
     sessionNamer.value = sessionName.innerHTML;
     sessionNamer.focus();
-    sessionNamer.style.borderBottom = '2px solid pink';
     sessionNamer.style.display = 'block';
 
-    document.querySelector('.session__save').style.display = 'none';
-    document.querySelector('.session__saveEdit').style.display = 'block';
+    document.querySelector('.save__overlay').style.display = 'none';
+    document.querySelector('.saveEdit__overlay').style.display = 'block';
 
     tabs.map(tab => {
-      const node = document.createElement('a');
-      node.appendChild(document.createTextNode('x'));
+      const node = document.createElement('img');
+      node.src = 'images/icon__delete.svg';
       node.classList.add('tab__delete');
 
       node.addEventListener('click', (e) => deleteTab(e));
@@ -210,8 +235,13 @@ function deleteSession(sessionName){
 
   function saveEdit(){
     const tabs = Array(... document.querySelectorAll('.tab'));
-    const name = document.querySelector('#session__namer').value;
+    const name = document.querySelector('#session__namer');
     const date = document.querySelector('.session__date').innerHTML;
+
+    if(name.value === '') {
+      name.placeholder = "Don't forget to name the session!";
+      return;
+    }
 
     const tabsObj = tabs.map(tab => {
       return new Tab(tab.childNodes[5].childNodes[1].textContent.trim(), tab.childNodes[5].childNodes[3].textContent.trim(), tab.childNodes[3].src, date);
@@ -220,11 +250,10 @@ function deleteSession(sessionName){
     if (tabsObj.length < 1) {
       return;
     }
+    browser.storage.local.set({[name.value.trim()]:tabsObj}).then(arr => {
 
-    browser.storage.local.set({[name.trim()]:tabsObj}).then(arr => {
       browser.runtime.reload();
   });
 
-    // console.log(tabsObj);
 
   }

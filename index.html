@@ -3,64 +3,45 @@
   <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
-  <link href="main.css" rel="stylesheet"></head>
+    <meta charset="UTF-8">
+  <link href="main.css" rel="stylesheet">
+</head>
   <body>
-    <!-- Add your code here -->
     <div class="wrapper">
       <div class="nav grid__element">
         <input class="nav__search" placeholder="Search sessions" />
+        <a class="app__title">tabboo</a>
+        <img class="logo" src="images/icon.svg" />
       </div>
       <div class="sidebar grid__element">
-          Saved Sessions
+          <a class="grid__element__title">Saved Sessions</a>
           <div class="sidebar__wrapper">
       </div>
       </div>
       <div class="main grid__element">
-          Current Session
+          <a class="grid__element__title">Current Session</a>
         <div class="main__wrapper">
           <div class="session__meta">
             <input placeholder="Name Your Session" id="session__namer" />
             <a id="session__name"></a>
             <a class="session__amount">
-              <span class="amount__number session__number">5 </span>Tabs
+              <span class="amount__number session__number">0 </span>Tabs
             </a>
             <a class="session__date"></a>
             <a class="session__open session__action">open</a>
             <a class="session__edit session__action">edit</a>
-            <a class="session__save session__action">save</a>
-            <a class="session__saveEdit session__action">save</a>
+            <div class="save__overlay">
+              save
+              <a class="session__save">save</a>
+            </div>
+            <div class="saveEdit__overlay">
+              save
+              <a class="session__saveEdit">save</a>
+            </div>
           </div>
           <ul class="tabs">
           </ul>
         </div>
-
-        <!-- <div class="session__legend">
-          <a class="session__name">Current Session</a>
-          <a class="legend__open legend__action">Open</a>
-          <input id="session__namer" placeholder="Name? Press enter to save" />
-          <a class="legend__save legend__action">Save</a>
-        </div>
-        <div class="session__legend legend--main">
-          <a class="legend__recorded"></a>
-          <a class="legend__amount">0 Tabs</a>
-        </div>
-        <ul class="tabs">
-          <li class="tab">
-                <img class="icon" src="http://via.placeholder.com/30" />
-                <a class="tab__title">Google</a>
-                <a class="tab__url" src="www.google.se">www.google.se</a>
-          </li>
-          <li class="tab">
-                <img class="icon" src="http://via.placeholder.com/30" />
-                <a class="tab__title">Google</a>
-                <a class="tab__url" src="www.google.se">www.google.se</a>
-          </li>
-          <li class="tab">
-                <img class="icon" src="http://via.placeholder.com/30" />
-                <a class="tab__title">Google</a>
-                <a class="tab__url" src="www.google.se">www.google.se</a>
-          </li>
-        </ul> -->
     </div>
   <script type="text/javascript" src="main.js"></script></body>
 </html>
