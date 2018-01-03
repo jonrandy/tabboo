@@ -2,7 +2,7 @@
   "manifest_version": 2,
   "name": "Tabboo - Tab Manager",
   "version": "2.0 - Release version",
-  "description": "Simple tab manager for the amazing Firefox Quantum. Inspired by the Chrome extension Session Buddy. Design by nojuan - https://dribbble.com/nojuan Code by Digital Hank - http://digitalhank.se/",
+  "description": "Simple tab manager for the amazing Firefox Quantum. Inspired by the Chrome extension Session Buddy. Design by nojuan - https://dribbble.com/nojuan Code by Digital Hank - http://digitalhank.se/ , https://github.com/digitalhank",
   "permissions": [
     "sessions",
     "tabs",
