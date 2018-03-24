@@ -1,9 +1,10 @@
 
-function Tab (name, url, favicon, created) {
+function Tab (name, url, favicon, created, pinned) {
   this.name = name;
   this.url = url;
   this.favicon = favicon;
   this.created = created;
+  this.pinned = pinned;
 }
 
 let currentTabs = [];
@@ -12,8 +13,8 @@ let currentTabs = [];
     const now = new Date().toUTCString();
 
     return query.map(tab => {
-      return new Tab(tab.title, tab.url, tab.favIconUrl || 'images/icon__missing.png', now);
-    }).filter(tab => !tab.url.search('http'));
+      return new Tab(tab.title, tab.url, tab.favIconUrl || 'images/icon__missing.png', now, tab.pinned);
+    }).filter(tab => !tab.url.search('http')).filter(tab => !tab.pinned);
   });
 
   query.then(array => {
