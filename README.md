@@ -6,7 +6,7 @@ Code by Digital Hank - http://digitalhank.se/ , https://github.com/digitalhank
 
 Find it here on the app store - https://addons.mozilla.org/en-US/firefox/addon/tabboo-session-manager/
 
-INSTALLATION (until it's available on the Add-On store)
+INSTALLATION
 
 1. Clone repo
 2. npm install -g web-ext
