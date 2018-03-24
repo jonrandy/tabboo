@@ -1,20 +1,22 @@
 
-function Tab (name, url, favicon, created, pinned) {
+function Tab (name, url, favicon, created) {
   this.name = name;
   this.url = url;
   this.favicon = favicon;
   this.created = created;
-  this.pinned = pinned;
+
 }
 
 let currentTabs = [];
 
   const query = browser.tabs.query({currentWindow:true}).then(query => {
     const now = new Date().toUTCString();
+    
+    const noPinned = query.filter(tab => !tab.pinned);
 
-    return query.map(tab => {
-      return new Tab(tab.title, tab.url, tab.favIconUrl || 'images/icon__missing.png', now, tab.pinned);
-    }).filter(tab => !tab.url.search('http')).filter(tab => !tab.pinned);
+    return noPinned.map(tab => {
+      return new Tab(tab.title, tab.url, tab.favIconUrl || 'images/icon__missing.png', now);
+    }).filter(tab => !tab.url.search('http'));
   });
 
   query.then(array => {
