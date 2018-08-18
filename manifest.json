@@ -17,5 +17,10 @@
     "48": "images/icon.svg",
     "96": "images/icon.svg",
     "128": "images/icon.svg"
+  },
+  "applications": {
+    "gecko": {
+      "id": "tabboo@digitalhank"
+    }
   }
 }

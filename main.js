@@ -53,7 +53,7 @@ function openSession(){
 
 function displaySidebar(){
   const sidebar = document.querySelector('.sidebar__wrapper');
-  const storage = browser.storage.local;
+  const storage = browser.storage.sync;
 
 
   storage.get(null).then(sessions => {
@@ -105,7 +105,7 @@ function sidebarActions(sessionName, e){
 }
 
 function deleteSession(sessionName){
-  browser.storage.local.remove(sessionName).then(item => {
+  browser.storage.sync.remove(sessionName).then(item => {
     displaySidebar();
   });
 }
@@ -160,7 +160,7 @@ function deleteSession(sessionName){
 
   function saveSession(array) {
     const elName = document.querySelector('#session__namer');
-    const storage = browser.storage.local;
+    const storage = browser.storage.sync;
     const saveButton = document.querySelector('.session__save');
 
     const name = elName.value;
@@ -180,7 +180,7 @@ function deleteSession(sessionName){
       const input = document.querySelector('.nav__search').value.toUpperCase();
       const sidebarWrapper = document.querySelector('.sidebar__wrapper');
 
-      browser.storage.local.get(null).then(sessions => {
+      browser.storage.sync.get(null).then(sessions => {
         const sessionsArray = Object.entries(sessions);
 
       const result =  sessionsArray.filter(obj => Object.keys(obj).some(key => obj[key].includes(input)));
@@ -253,7 +253,7 @@ function deleteSession(sessionName){
     if (tabsObj.length < 1) {
       return;
     }
-    browser.storage.local.set({[name.value.trim()]:tabsObj}).then(arr => {
+    browser.storage.sync.set({[name.value.trim()]:tabsObj}).then(arr => {
 
       browser.runtime.reload();
   });
